@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using my_books.Data;
+using my_books.Data.services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddSwaggerGen();
 string? dbConnectionString = builder.Configuration.GetSection("ConnectionStrings")["DefaultDBConnection"];
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(dbConnectionString));
 
+builder.Services.AddTransient<BooksService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
