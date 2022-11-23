@@ -17,6 +17,8 @@ string? dbConnectionString = builder.Configuration.GetSection("ConnectionStrings
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(dbConnectionString));
 
 builder.Services.AddTransient<BooksService>();
+builder.Services.AddTransient<AuthorsService>();
+builder.Services.AddTransient<PublishersService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
