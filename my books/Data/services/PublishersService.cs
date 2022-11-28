@@ -16,5 +16,7 @@ namespace my_books.Data.services
             _appDbContext.Add(new Publisher() { Name = publisher.Name });
             _appDbContext.SaveChanges();
         }
+
+        public Publisher? GetPublisherById(int id) => _appDbContext.Publishers.Where(x => x.Id == id).FirstOrDefault();
     }
 }
