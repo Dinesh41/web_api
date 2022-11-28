@@ -29,7 +29,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.ConfigureBuiltInExceptionHandler();
+//app.ConfigureBuiltInExceptionHandler();
+app.ConfigureCustomExceptionMiddleware();   
 
 app.UseHttpsRedirection();
 
