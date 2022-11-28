@@ -19,6 +19,7 @@ namespace my_books.Controllers
         [HttpPost]
         public IActionResult AddAuthor([FromBody] AuthorVM author)
         {
+            throw new Exception("Testing Global Exception");
             _authorsService.AddAuthor(author);
             return Ok();
         }

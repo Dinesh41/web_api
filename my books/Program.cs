@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using my_books.Data;
 using my_books.Data.services;
+using my_books.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.ConfigureBuiltInExceptionHandler();
 
 app.UseHttpsRedirection();
 
