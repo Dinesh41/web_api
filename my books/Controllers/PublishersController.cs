@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using my_books.ActionResult;
 using my_books.Data.services;
 using my_books.Data.ViewModels;
+using Newtonsoft.Json;
 
 namespace my_books.Controllers
 {
@@ -46,9 +47,17 @@ namespace my_books.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllPublisher(string? sortBy, string? searchName)
+        public IActionResult GetAllPublisher(string? sortBy, string? searchName,int? pageIndex,int? pageSize)
         {
-            var publishers = _publishersService.GetAllPublisher(sortBy,searchName);
+            var publishers = _publishersService.GetAllPublisher(sortBy,searchName,pageIndex,pageSize);
+            var metadata = new
+            {
+                publishers.TotalPages,
+                publishers.PageIndex,
+                publishers.HasNextPage,
+                publishers.HasPreviousPage
+            };
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
             return Ok(publishers); 
         }
     }

@@ -1,4 +1,5 @@
 ﻿using my_books.Data.models;
+using my_books.Data.Paging;
 using my_books.Data.ViewModels;
 
 namespace my_books.Data.services
@@ -19,7 +20,7 @@ namespace my_books.Data.services
 
         public Publisher? GetPublisherById(int id) => _appDbContext.Publishers.Where(x => x.Id == id).FirstOrDefault();
 
-        public List<Publisher> GetAllPublisher(string? sortBy,string? searchName)
+        public PaginatedList<Publisher> GetAllPublisher(string? sortBy,string? searchName,int? pageIndex,int? pageSize)
         {
             var allPublishers= _appDbContext.Publishers.OrderBy(n=>n.Name).ToList();
             if(sortBy == "Name_Dec")
@@ -30,7 +31,9 @@ namespace my_books.Data.services
             {
                 allPublishers=allPublishers.Where(n=>n.Name!.Contains(searchName,StringComparison.OrdinalIgnoreCase)).ToList();
             }
-            return allPublishers;
+
+            return PaginatedList<Publisher>.create(allPublishers.AsQueryable(), pageIndex ?? 1, pageSize ?? 5);
+   
         }
         
     }
