@@ -44,5 +44,12 @@ namespace my_books.Controllers
                 });
             }
         }
+
+        [HttpGet]
+        public IActionResult GetAllPublisher(string? sortBy, string? searchName)
+        {
+            var publishers = _publishersService.GetAllPublisher(sortBy,searchName);
+            return Ok(publishers); 
+        }
     }
 }
