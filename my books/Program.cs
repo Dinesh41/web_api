@@ -4,8 +4,16 @@ using Microsoft.EntityFrameworkCore;
 using my_books.Data;
 using my_books.Data.services;
 using my_books.Exceptions;
+using Serilog;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.File("Logs/log.txt")
+    .CreateLogger();
+Log.Information("The global logger has been configured");
+builder.Host.UseSerilog();
 
 
 // Add services to the container.
