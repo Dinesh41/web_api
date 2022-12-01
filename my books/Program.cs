@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using my_books.Data;
 using my_books.Data.services;
@@ -9,6 +11,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddApiVersioning(config =>
+{
+    config.DefaultApiVersion = new ApiVersion(1,0);
+    config.AssumeDefaultVersionWhenUnspecified = true;
+    //config.ApiVersionReader = new HeaderApiVersionReader("custom-api-version");
+    config.ApiVersionReader = new MediaTypeApiVersionReader();
+
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -27,10 +37,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 
 //app.ConfigureBuiltInExceptionHandler();
-app.ConfigureCustomExceptionMiddleware();   
+//app.ConfigureCustomExceptionMiddleware();   
 
 app.UseHttpsRedirection();
 
